@@ -1,0 +1,8 @@
+name: 'pr-commit-messages-action'
+description: 'get PR commit messages'
+outputs:
+  commits:
+    description: 'commit messages'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

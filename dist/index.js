@@ -9,7 +9,7 @@ const core = __nccwpck_require__(769)
 const github = __nccwpck_require__(696)
 
 try {
-  const payload = github.context.payload
+  const { payload } = github.context
   const commits = payload.commits
     .map(c => c.message)
     .filter(m => !/^Merge pull request/.test(m))

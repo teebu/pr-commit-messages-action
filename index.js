@@ -6,6 +6,7 @@ try {
   const commits = payload.commits
     .map(c => c.message)
     .filter(m => !/^Merge pull request/.test(m))
+    .map(m => m.replace(/\s+/g, ' '))
     .map(m => `> ${m}`)
     .join('\n')
 

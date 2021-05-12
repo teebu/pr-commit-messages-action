@@ -12,5 +12,5 @@ try {
 
   core.setOutput('commits', commits)
 } catch (error) {
-  core.setFailed(error.message)
+  core.error(error.message)
 }

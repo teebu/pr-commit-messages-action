@@ -9,3 +9,10 @@ runs:
 branding:
   icon: 'git-pull-request'
   color: 'red'
+inputs:
+  sha:
+    description: "sha of the commit"
+    required: false
+  message_count:
+    description: "how many last commits to add"
+    required: false

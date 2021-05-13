@@ -1,19 +1,27 @@
-const core = require('@actions/core')
-const github = require('@actions/github')
+const core = require('@actions/core');
+const { exec } = require('child_process');
 
 try {
-  const { payload } = github.context
   const last_n_messages = 3
-  const commits = payload.commits
-    .map(c => c.message)
-    .filter(m => !/^Merge pull request/.test(m))
+  const sha = core.getInput('sha') || process.env.GITHUB_SHA;
+  //exec(`git log --format=%B -n 5 ${sha}`, (err, stdout, stderr) => {
+  exec(`git log --format=%B -n ${last_n_messages} ${sha}`, (err, stdout, stderr) => {
+    if (err) {
+      throw err;
+    }
+
+    const commits = stdout
+    .split('\n\n')
+    .filter(m => !/^Merge pull request/.test(m)) // remove merge line
+    .filter(n => n) // remove empty strings
     .map(m => m.replace(/\n+(.*)/g, '\n> $1'))
     .map(m => `> ${m}`)
+    .join('\n')
 
-  let latest = commits.slice(Math.max(commits.length - last_n_messages, 0))
-  latest = latest.join('\n')
 
-  core.setOutput('commits', latest)
+    core.setOutput('commits', commits)
+
+  });
 } catch (error) {
-  core.error(error.message)
+  core.setFailed(error.message);
 }

@@ -17,9 +17,7 @@ try {
     .map(m => `> ${m}`)
     .join('\n')
 
-
     core.setOutput('commits', commits)
-
   });
 } catch (error) {
   core.setFailed(error.message);

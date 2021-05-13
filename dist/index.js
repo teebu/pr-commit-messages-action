@@ -9,13 +9,14 @@ const core = __nccwpck_require__(186);
 const { exec } = __nccwpck_require__(129);
 
 try {
-  const last_n_messages = 3
+  const message_count = core.getInput('message_count') || 3;
   const sha = core.getInput('sha') || process.env.GITHUB_SHA;
-  //exec(`git log --format=%B -n 5 ${sha}`, (err, stdout, stderr) => {
-  exec(`git log --format=%B -n ${last_n_messages} ${sha}`, (err, stdout, stderr) => {
+  exec(`git log --format=%B -n ${message_count} ${sha}`, (err, stdout, stderr) => {
     if (err) {
       throw err;
     }
+
+    core.debug(stdout);
 
     const commits = stdout
     .split('\n\n')
@@ -25,9 +26,7 @@ try {
     .map(m => `> ${m}`)
     .join('\n')
 
-
     core.setOutput('commits', commits)
-
   });
 } catch (error) {
   core.setFailed(error.message);

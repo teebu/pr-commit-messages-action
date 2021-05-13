@@ -9,6 +9,8 @@ try {
       throw err;
     }
 
+    core.debug(stdout);
+
     const commits = stdout
     .split('\n\n')
     .filter(m => !/^Merge pull request/.test(m)) // remove merge line

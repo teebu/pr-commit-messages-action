@@ -4,7 +4,7 @@ get PR commit messages
 
 ## Inputs
 
-none
+message_count _(default: 3)_
 
 ## Outputs
 

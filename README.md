@@ -21,5 +21,5 @@ PR commit messages:
 ## Example usage
 
 ```yaml
-uses: kzdjs/pr-commit-messages-action@v1.0.0
+uses: teebu/pr-commit-messages-action@v1.0.0
 ```

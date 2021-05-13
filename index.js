@@ -2,10 +2,9 @@ const core = require('@actions/core');
 const { exec } = require('child_process');
 
 try {
-  const last_n_messages = 3
+  const message_count = core.getInput('message_count') || 3;
   const sha = core.getInput('sha') || process.env.GITHUB_SHA;
-  //exec(`git log --format=%B -n 5 ${sha}`, (err, stdout, stderr) => {
-  exec(`git log --format=%B -n ${last_n_messages} ${sha}`, (err, stdout, stderr) => {
+  exec(`git log --format=%B -n ${message_count} ${sha}`, (err, stdout, stderr) => {
     if (err) {
       throw err;
     }

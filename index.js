@@ -1,26 +1,47 @@
-const core = require('@actions/core');
-const { exec } = require('child_process');
+const core = require('@actions/core')
+const github = require('@actions/github')
 
-try {
-  const message_count = core.getInput('message_count') || 3;
-  const sha = core.getInput('sha') || process.env.GITHUB_SHA;
-  exec(`git log --format=%B -n ${message_count} ${sha}`, (err, stdout, stderr) => {
-    if (err) {
-      throw err;
+const validEvent = ['pull_request']
+
+async function main() {
+  try {
+    const { eventName, payload: {repository: repo, pull_request: pr} } = github.context
+
+    if (validEvent.indexOf(eventName) < 0) {
+      core.error(`Invalid event: ${eventName}`)
+      return
     }
 
-    core.debug(stdout);
+    const token = core.getInput('token')
+    const num_commits = core.getInput('num_commits') || 5
 
-    const commits = stdout
-    .split('\n\n')
-    .filter(m => !/^Merge pull request/.test(m)) // remove merge line
-    .filter(n => n) // remove empty strings
-    .map(m => m.replace(/\n+(.*)/g, '\n> $1'))
-    .map(m => `> ${m}`)
-    .join('\n')
+    const octokit = new github.GitHub(token)
 
-    core.setOutput('commits', commits)
-  });
-} catch (error) {
-  core.setFailed(error.message);
+    const commits = await octokit.pulls.listCommits({
+      owner: repo.owner.login,
+      repo: repo.name,
+      pull_number: pr.number,
+    })
+
+    let filtered_commits = commits
+      .map(c => c.commit.message)
+      .filter(m => !/^Merge pull request/.test(m)) // remove merge line
+      .filter(n => n) // remove empty strings
+      .map(m => m.replace(/\n+(.*)/g, '\n> $1'))
+      .map(m => `> ${m}`)
+
+    const last_commit = filtered_commits.slice(Math.max(filtered_commits.length - 1, 0))
+    const last_x_commit = filtered_commits.slice(Math.max(filtered_commits.length - num_commits, 0))
+
+    core.setOutput('commits', commits.join('\n'))
+    core.setOutput('last_commit', last_commit.join('\n'))
+    core.setOutput('last_x_commit', last_x_commit.join('\n'))
+
+    core.setOutput('commits', JSON.stringify(commits.data))
+  } catch (error) {
+    core.setFailed(error.message)
+  }
 }
+
+main()
+

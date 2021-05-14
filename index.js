@@ -23,6 +23,8 @@ async function main() {
       pull_number: pr.number,
     })
 
+    core.debug(commits)
+
     let filtered_commits = commits
       .map(c => c.commit.message)
       .filter(m => !/^Merge pull request/.test(m)) // remove merge line

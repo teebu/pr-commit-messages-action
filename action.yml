@@ -1,8 +1,12 @@
-name: 'pr-commit-messages-action'
+name: 'pr-commit-x-messages-action'
 description: 'get PR commit messages'
 outputs:
   commits:
     description: 'PR commit messages'
+  last_commit:
+    description: 'last PR commit messages'
+  last_x_commit:
+    description: 'x PR commit messages'
 runs:
   using: 'node12'
   main: 'dist/index.js'

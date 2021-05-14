@@ -9,7 +9,7 @@ num_commits _(default: 5)_
 
 ## Outputs
 
-### `commits`
+### `commits`, `last_commit`, `last_x_commit`
 
 PR commit messages:
 
@@ -22,5 +22,12 @@ PR commit messages:
 ## Example usage
 
 ```yaml
-uses: teebu/pr-commit-messages-action@main
+  - name: Get PR Commits
+    id: 'pr-commit-x-messages-action'
+    uses: teebu/pr-commit-messages-action@v1.1.5
+    with:
+      token: ${{ secrets.GITHUB_TOKEN }}
+...
+...
+  echo: '${{ steps.pr-commit-x-messages-action.outputs.last_commit }}'
 ```

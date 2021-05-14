@@ -24,15 +24,15 @@ async function main() {
       per_page: 100
     })
 
+    core.debug(JSON.stringify(response))
+    core.debug(JSON.stringify(response.data.length))
+
     if (response.status !== 200) {
       core.error(`Invalid status: ${response.status}`)
       return
     }
 
     const commits = response.data
-    core.debug(JSON.stringify(response.data))
-    core.debug(JSON.stringify(response.data.length))
-
 
     let filtered_commits = commits
       .map(c => c.commit.message)

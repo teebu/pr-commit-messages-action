@@ -23,7 +23,7 @@ async function main() {
       pull_number: pr.number,
     })
 
-    core.debug(commits)
+    core.debug(JSON.stringify(commits))
 
     let filtered_commits = commits
       .map(c => c.commit.message)

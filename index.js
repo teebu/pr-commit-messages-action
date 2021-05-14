@@ -24,8 +24,8 @@ async function main() {
       per_page: 100
     })
 
-    core.debug(JSON.stringify(response))
-    core.debug(JSON.stringify(response.data.length))
+    // core.debug(JSON.stringify(response))
+    core.debug('commits found: ' + JSON.stringify(response.data.length))
 
     if (response.status !== 200) {
       core.error(`Invalid status: ${response.status}`)

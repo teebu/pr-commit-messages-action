@@ -1,4 +1,4 @@
-# pr-commit-messages-action
+# pr-commit-x-messages-action
 
 get PR commit messages
 

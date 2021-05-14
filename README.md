@@ -4,7 +4,8 @@ get PR commit messages
 
 ## Inputs
 
-message_count _(default: 3)_
+token _(gh token)_
+num_commits _(default: 5)_
 
 ## Outputs
 
@@ -21,5 +22,5 @@ PR commit messages:
 ## Example usage
 
 ```yaml
-uses: teebu/pr-commit-messages-action@v1.0.0
+uses: teebu/pr-commit-messages-action@main
 ```

@@ -16,8 +16,8 @@
   "license": "ISC",
   "homepage": "https://github.com/teebu/pr-commit-messages-action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/github": "^2.1.1"
+    "@actions/core": "^1.2.7",
+    "@actions/github": "^4.0.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.28.5"

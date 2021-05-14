@@ -6057,13 +6057,12 @@ async function main() {
     const token = core.getInput('token')
     const num_commits = core.getInput('num_commits') || 5
 
-    const octokit = new github.GitHub(token)
+    const octokit = github.getOctokit(token)
 
-    const response = await octokit.pulls.listCommits({
+    const response = await octokit.rest.pulls.listCommits({
       owner: repo.owner.login,
       repo: repo.name,
       pull_number: pr.number,
-      per_page: 100
     })
 
     core.debug(JSON.stringify(response))

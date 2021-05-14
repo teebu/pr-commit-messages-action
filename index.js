@@ -21,6 +21,7 @@ async function main() {
       owner: repo.owner.login,
       repo: repo.name,
       pull_number: pr.number,
+      per_page: 100
     })
 
     core.debug(JSON.stringify(response))

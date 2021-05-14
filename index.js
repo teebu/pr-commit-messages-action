@@ -17,13 +17,20 @@ async function main() {
 
     const octokit = new github.GitHub(token)
 
-    const commits = await octokit.pulls.listCommits({
+    const response = await octokit.pulls.listCommits({
       owner: repo.owner.login,
       repo: repo.name,
       pull_number: pr.number,
     })
 
-    core.debug(JSON.stringify(commits))
+    core.debug(JSON.stringify(response))
+
+    if (response.status !== 200) {
+      core.error(`Invalid status: ${response.status}`)
+      return
+    }
+
+    const commits = response.data
 
     let filtered_commits = commits
       .map(c => c.commit.message)

@@ -25492,15 +25492,13 @@ async function main() {
       pull_number: pr.number,
     })
 
-    // core.debug(JSON.stringify(response))
-
     if (response.status !== 200) {
       core.error(`Invalid status: ${response.status}`)
       return
     }
 
     const commits = response.data
-    core.debug(JSON.stringify(response.data))
+    // core.debug(JSON.stringify(response.data))
 
     let filtered_commits = commits
       .map(c => c.commit.message)

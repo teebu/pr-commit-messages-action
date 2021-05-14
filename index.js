@@ -43,7 +43,7 @@ async function main() {
     const last_commit = filtered_commits.slice(Math.max(filtered_commits.length - 1, 0))
     const last_x_commit = filtered_commits.slice(Math.max(filtered_commits.length - num_commits, 0))
 
-    core.setOutput('commits', commits.join('\n'))
+    core.setOutput('commits', filtered_commits.join('\n'))
     core.setOutput('last_commit', last_commit.join('\n'))
     core.setOutput('last_x_commit', last_x_commit.join('\n'))
 

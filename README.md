@@ -4,7 +4,7 @@ get PR commit messages
 
 ## Inputs
 
-token _(gh token)_  
+token _(gh token)_   
 num_commits _(default: 5)_
 
 ## Outputs

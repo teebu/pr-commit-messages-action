@@ -35,7 +35,7 @@ async function main() {
 
     let filtered_commits = commits
       .map(c => c.commit.message)
-      .filter(m => !/^Merge pull request/.test(m)) // remove merge line
+      .filter(m => !/^Merge pull request/.test(m)) // remove merge string
       .filter(n => n) // remove empty strings
       .map(m => m.replace(/\n+(.*)/g, '\n> $1'))
       .map(m => `> ${m}`)
@@ -43,11 +43,11 @@ async function main() {
     const last_commit = filtered_commits.slice(Math.max(filtered_commits.length - 1, 0))
     const last_x_commit = filtered_commits.slice(Math.max(filtered_commits.length - num_commits, 0))
 
+    // set outputs
     core.setOutput('commits', filtered_commits.join('\n'))
     core.setOutput('last_commit', last_commit.join('\n'))
     core.setOutput('last_x_commit', last_x_commit.join('\n'))
 
-    core.setOutput('commits', JSON.stringify(commits.data))
   } catch (error) {
     core.setFailed(error.message)
   }

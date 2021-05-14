@@ -30,7 +30,9 @@ async function main() {
     }
 
     const commits = response.data
-    // core.debug(JSON.stringify(response.data))
+    core.debug(JSON.stringify(response.data))
+    core.debug(JSON.stringify(response.data.length))
+
 
     let filtered_commits = commits
       .map(c => c.commit.message)
